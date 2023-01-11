@@ -83,3 +83,23 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+# Mac OS
+.DS_Store
+
+
+# Gradle
+.gradle
+build
+
+# IntelliJ Idea
+.idea/*
+!.idea/codeStyleSettings.xml
+!.idea/inspectionProfiles
+/projectFilesBackup/*
+
+/local.properties
+/captures
+.cxx
+/app/pearldriveSideload/release/
+/app/sideload/release/
+

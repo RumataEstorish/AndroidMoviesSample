@@ -85,7 +85,8 @@ private fun MovieDetailsContent(
                             contentDescription = stringResource(id = R.string.back_button)
                         )
                     }
-                })
+                }
+            )
         },
         content = { paddingValues ->
 
@@ -105,7 +106,8 @@ private fun MovieDetailsContent(
                     MovieDetailsLayout(movieDetails = it)
                 }
             }
-        })
+        }
+    )
 }
 
 @Composable
@@ -114,9 +116,9 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .padding(32.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
 
-        ) {
+    ) {
         val imageModifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 320.dp)

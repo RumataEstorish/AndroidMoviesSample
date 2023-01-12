@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -18,6 +19,7 @@ import androidx.navigation.NavHostController
 import coil.compose.SubcomposeAsyncImage
 import com.example.androidmoviessample.R
 import com.example.androidmoviessample.domain.models.Movie
+import com.example.androidmoviessample.domain.models.TrendingPeriod
 import com.example.androidmoviessample.ui.error.ErrorScreenContent
 import com.example.androidmoviessample.ui.theme.AndroidMoviesSampleTheme
 import com.example.androidmoviessample.ui.utils.ImageEmpty
@@ -38,8 +40,6 @@ fun MovieListScreen(
         }
     }
 
-    MoviesListContent(movies = emptyList()) {}
-
     when (val state = viewModel.onState.collectAsState().value) {
         is MovieListState.ShowNetworkError -> ErrorScreenContent(
             message = stringResource(id = R.string.network_error),
@@ -51,14 +51,18 @@ fun MovieListScreen(
             stringResource(id = R.string.refresh),
             onActionClick = viewModel::onRefreshClick
         )
-        MovieListState.ShowLoad -> MoviesListContent(
+        is MovieListState.ShowLoad -> MoviesListContent(
             movies = emptyList(),
-            showProgress = true
+            showProgress = true,
+            trendingPeriod = state.trendingPeriod,
+            onChangeTrendingPeriod = viewModel::onChangeTrendingPeriod
         ) { }
         is MovieListState.UpdateMovieList -> MoviesListContent(
             movies = state.movies,
             showProgress = false,
-            onMovieClicked = viewModel::onMovieClick
+            trendingPeriod = state.trendingPeriod,
+            onMovieClicked = viewModel::onMovieClick,
+            onChangeTrendingPeriod = viewModel::onChangeTrendingPeriod
         )
     }
 }
@@ -68,13 +72,50 @@ fun MovieListScreen(
 private fun MoviesListContent(
     movies: List<Movie>,
     showProgress: Boolean = false,
+    trendingPeriod: TrendingPeriod,
+    onChangeTrendingPeriod: (trendingPeriod: TrendingPeriod) -> Unit,
     onMovieClicked: (movie: Movie) -> Unit
 ) {
     val showProgressState = rememberSaveable { showProgress }
+    val trendingPeriodState = rememberSaveable { trendingPeriod }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { TopAppBarTitle(stringResource(id = R.string.trending_movies)) })
+            TopAppBar(
+                title = { TopAppBarTitle(stringResource(id = R.string.trending_movies)) },
+                actions = {
+                    val iconButtonModifier = Modifier
+                        .width(48.dp)
+                        .height(48.dp)
+
+                    val iconModifier = Modifier
+                        .padding(8.dp)
+
+                    when (trendingPeriodState) {
+                        TrendingPeriod.DAY -> IconButton(
+                            modifier = iconButtonModifier,
+                            onClick = { onChangeTrendingPeriod(TrendingPeriod.WEEK) }
+                        ) {
+                            Icon(
+                                modifier = iconModifier,
+                                painter = painterResource(id = R.drawable.ic_trending_day),
+                                contentDescription = stringResource(id = R.string.trending_week)
+                            )
+                        }
+                        TrendingPeriod.WEEK ->
+                            IconButton(
+                                modifier = iconButtonModifier,
+                                onClick = { onChangeTrendingPeriod(TrendingPeriod.DAY) }
+                            ) {
+                                Icon(
+                                    modifier = iconModifier,
+                                    painter = painterResource(id = R.drawable.ic_trending_week),
+                                    contentDescription = stringResource(id = R.string.trending_day)
+                                )
+                            }
+                    }
+                }
+            )
         },
         content = { paddingValues ->
             Column(
@@ -224,7 +265,9 @@ private fun PreviewMovieListItemNight() {
 private fun PreviewMoviesListNight() {
     AndroidMoviesSampleTheme {
         MoviesListContent(
-            movies = getMoviesSample()
+            movies = getMoviesSample(),
+            trendingPeriod = TrendingPeriod.WEEK,
+            onChangeTrendingPeriod = {}
         ) {}
     }
 }
@@ -234,7 +277,9 @@ private fun PreviewMoviesListNight() {
 private fun PreviewMoviesList() {
     AndroidMoviesSampleTheme {
         MoviesListContent(
-            movies = getMoviesSample()
+            movies = getMoviesSample(),
+            trendingPeriod = TrendingPeriod.DAY,
+            onChangeTrendingPeriod = {}
         ) {}
     }
 }

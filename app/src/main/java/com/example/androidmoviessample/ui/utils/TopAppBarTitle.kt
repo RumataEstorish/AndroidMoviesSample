@@ -8,6 +8,6 @@ import androidx.compose.runtime.Composable
 fun TopAppBarTitle(title: String) {
     Text(
         text = title,
-        fontSize = MaterialTheme.typography.titleSmall.fontSize
+        fontSize = MaterialTheme.typography.headlineSmall.fontSize
     )
 }

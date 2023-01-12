@@ -4,9 +4,9 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,6 +25,7 @@ import com.example.androidmoviessample.ui.theme.AndroidMoviesSampleTheme
 import com.example.androidmoviessample.ui.utils.ImageEmpty
 import com.example.androidmoviessample.ui.utils.ImageError
 import com.example.androidmoviessample.ui.utils.ImageLoading
+import com.example.androidmoviessample.ui.utils.TopAppBarTitle
 import java.time.LocalDate
 
 @Composable
@@ -62,6 +63,7 @@ fun MovieDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MovieDetailsContent(
     movieDetails: MovieDetails?,
@@ -70,21 +72,40 @@ private fun MovieDetailsContent(
 ) {
     val showProgressState = rememberSaveable { showProgress }
 
-    Column(
-        Modifier
-            .fillMaxSize()
-    ) {
-        if (showProgressState) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    TopAppBarTitle(title = stringResource(id = R.string.movie_details))
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back_button)
+                        )
+                    }
+                })
+        },
+        content = { paddingValues ->
 
-        movieDetails?.let {
-            MovieDetailsLayout(movieDetails = it)
-        }
-    }
+            Column(
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+            ) {
+                if (showProgressState) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+
+                movieDetails?.let {
+                    MovieDetailsLayout(movieDetails = it)
+                }
+            }
+        })
 }
 
 @Composable
@@ -95,7 +116,7 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
             .padding(32.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp),
 
-    ) {
+        ) {
         val imageModifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 320.dp)

@@ -23,6 +23,7 @@ import com.example.androidmoviessample.ui.theme.AndroidMoviesSampleTheme
 import com.example.androidmoviessample.ui.utils.ImageEmpty
 import com.example.androidmoviessample.ui.utils.ImageError
 import com.example.androidmoviessample.ui.utils.ImageLoading
+import com.example.androidmoviessample.ui.utils.TopAppBarTitle
 import java.time.LocalDate
 import java.util.*
 
@@ -62,6 +63,7 @@ fun MovieListScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MoviesListContent(
     movies: List<Movie>,
@@ -70,23 +72,31 @@ private fun MoviesListContent(
 ) {
     val showProgressState = rememberSaveable { showProgress }
 
-    Column(
-        Modifier
-            .fillMaxSize()
-    ) {
-        if (showProgressState) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { TopAppBarTitle(stringResource(id = R.string.trending_movies)) })
+        },
+        content = { paddingValues ->
+            Column(
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+            ) {
+                if (showProgressState) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
 
-        LazyColumn(Modifier) {
-            items(movies) {
-                MovieListItem(movie = it, onMovieClicked = onMovieClicked)
+                LazyColumn(Modifier) {
+                    items(movies) {
+                        MovieListItem(movie = it, onMovieClicked = onMovieClicked)
+                    }
+                }
             }
         }
-    }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

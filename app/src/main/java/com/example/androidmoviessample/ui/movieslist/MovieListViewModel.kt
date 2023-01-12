@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.net.ConnectException
 
 class MovieListViewModel(
     private val getMoviesUseCase: GetMoviesUseCase
@@ -32,8 +33,13 @@ class MovieListViewModel(
 
             val result = getMoviesUseCase(TrendingPeriod.WEEK)
             when {
-                result.isFailure -> _onState.value =
-                    MovieListState.ShowError(result.exceptionOrNull()?.toString() ?: "")
+                result.isFailure -> {
+                    _onState.value =
+                        when (result.exceptionOrNull()) {
+                            is ConnectException -> MovieListState.ShowNetworkError
+                            else -> MovieListState.ShowGeneralError
+                        }
+                }
                 result.isSuccess -> _onState.value =
                     MovieListState.UpdateMovieList(result.getOrNull() ?: emptyList())
             }

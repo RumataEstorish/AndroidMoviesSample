@@ -5,6 +5,7 @@ import com.example.androidmoviessample.data.web.models.MovieDetailsResponse
 import com.example.androidmoviessample.data.web.models.MovieResponse
 import com.example.androidmoviessample.data.web.requests.IMoviesRequest
 import com.example.androidmoviessample.domain.models.TrendingPeriod
+import timber.log.Timber
 
 internal class MoviesSource(
     private val moviesRequest: IMoviesRequest
@@ -14,9 +15,7 @@ internal class MoviesSource(
         moviesRequest.getConfiguration(apiKey)
             .body()
             ?.images
-            ?.let {
-                it.secureBaseUrl + it.posterSizes.first() to it.secureBaseUrl + it.posterSizes.last()
-            }
+            ?.let { it.secureBaseUrl + it.posterSizes.first() to it.secureBaseUrl + it.posterSizes.last() }
             ?: (null to null)
 
     suspend fun getMoviesList(
@@ -42,6 +41,11 @@ internal class MoviesSource(
                 }
                 ?: emptyList()
         }
+            .also {
+                if (it.isFailure) {
+                    Timber.e(it.exceptionOrNull())
+                }
+            }
 
     suspend fun getMovieDetails(
         id: Int,
@@ -55,5 +59,10 @@ internal class MoviesSource(
                 .body()
                 ?.apply { posterOriginalPath = originPath + posterPath }
         }
+            .also {
+                if (it.isFailure) {
+                    Timber.e(it.exceptionOrNull())
+                }
+            }
 
 }

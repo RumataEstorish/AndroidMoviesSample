@@ -1,5 +1,7 @@
 package com.example.androidmoviessample.domain.models
 
+import java.time.LocalDate
+
 data class MovieDetails(
     val id: String,
     val adult: Boolean,
@@ -13,7 +15,7 @@ data class MovieDetails(
     val overview: String,
     val popularity: Float,
     val posterOriginalPath: String?,
-    val releaseDate: String,
+    val releaseDate: LocalDate,
     val revenue: Long,
     val runtime: Int?,
     val status: String,

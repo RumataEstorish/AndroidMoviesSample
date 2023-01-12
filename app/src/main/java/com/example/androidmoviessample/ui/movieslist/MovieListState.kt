@@ -10,7 +10,7 @@ sealed class MovieListState {
         val movies: List<Movie>
     ) : MovieListState()
 
-    data class ShowError(
-        val error: String
-    ) : MovieListState()
+    object ShowNetworkError: MovieListState()
+
+    object ShowGeneralError: MovieListState()
 }

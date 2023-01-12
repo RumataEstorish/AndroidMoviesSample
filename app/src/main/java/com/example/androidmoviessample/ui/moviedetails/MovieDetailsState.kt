@@ -5,9 +5,9 @@ import com.example.androidmoviessample.domain.models.MovieDetails
 sealed class MovieDetailsState {
     object ShowLoad : MovieDetailsState()
 
-    data class ShowError(
-        val message: String
-    ) : MovieDetailsState()
+    object ShowNetworkError : MovieDetailsState()
+
+    object ShowGeneralError : MovieDetailsState()
 
     data class UpdateMovieDetails(
         val movieDetails: MovieDetails

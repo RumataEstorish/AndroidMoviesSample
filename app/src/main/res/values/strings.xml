@@ -3,4 +3,6 @@
     <string name="refresh">Refresh</string>
     <string name="back">Back</string>
     <string name="trending_movies">Trending movies</string>
+    <string name="network_error">Network error. Please, try again later</string>
+    <string name="unknown_error">Unknown error. Please, try again later</string>
 </resources>

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.net.ConnectException
 
 class MovieDetailsViewModel(
     private val movieId: String,
@@ -27,8 +28,13 @@ class MovieDetailsViewModel(
 
             val result = getMovieDetailsUseCase(movieId)
             when {
-                result.isFailure -> _onState.value =
-                    MovieDetailsState.ShowError(result.exceptionOrNull()?.toString() ?: "")
+                result.isFailure -> {
+                    _onState.value =
+                        when (result.exceptionOrNull()) {
+                            is ConnectException -> MovieDetailsState.ShowNetworkError
+                            else -> MovieDetailsState.ShowGeneralError
+                        }
+                }
                 result.isSuccess ->
                     result.getOrThrow()
                         ?.let {

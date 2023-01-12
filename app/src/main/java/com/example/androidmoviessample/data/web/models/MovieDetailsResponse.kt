@@ -2,6 +2,7 @@ package com.example.androidmoviessample.data.web.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
 internal data class MovieDetailsResponse(
@@ -36,7 +37,7 @@ internal data class MovieDetailsResponse(
     @Json(name = "production_countries")
     val productionCountries: List<ProductionCountryResponse>,
     @Json(name = "release_date")
-    val releaseDate: String,
+    val releaseDate: LocalDate,
     @Json(name = "revenue")
     val revenue: Long,
     @Json(name = "runtime")

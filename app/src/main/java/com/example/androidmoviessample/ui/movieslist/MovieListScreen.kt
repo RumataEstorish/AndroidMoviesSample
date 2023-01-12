@@ -22,6 +22,7 @@ import com.example.androidmoviessample.ui.theme.AndroidMoviesSampleTheme
 import com.example.androidmoviessample.ui.utils.ImageEmpty
 import com.example.androidmoviessample.ui.utils.ImageError
 import com.example.androidmoviessample.ui.utils.ImageLoading
+import java.time.LocalDate
 import java.util.*
 
 @Composable
@@ -38,21 +39,25 @@ fun MovieListScreen(
     MoviesListContent(movies = emptyList()) {}
 
     when (val state = viewModel.onState.collectAsState().value) {
-        is MovieListState.ShowError -> ErrorScreenContent(
-            message = state.error,
-            stringResource(id = R.string.refresh)
-        ) {
-            viewModel.onRefreshClick()
-        }
+        is MovieListState.ShowNetworkError -> ErrorScreenContent(
+            message = stringResource(id = R.string.network_error),
+            actionButtonText = stringResource(id = R.string.refresh),
+            onActionClick = viewModel::onRefreshClick
+        )
+        is MovieListState.ShowGeneralError -> ErrorScreenContent(
+            message = stringResource(id = R.string.unknown_error),
+            stringResource(id = R.string.refresh),
+            onActionClick = viewModel::onRefreshClick
+        )
         MovieListState.ShowLoad -> MoviesListContent(
-            emptyList(),
-            true
+            movies = emptyList(),
+            showProgress = true
         ) { }
         is MovieListState.UpdateMovieList -> MoviesListContent(
-            state.movies,
-            false
+            movies = state.movies,
+            showProgress = false,
+            onMovieClicked = viewModel::onMovieClick
         )
-        { viewModel.onMovieClick(it) }
     }
 }
 
@@ -108,7 +113,7 @@ private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) 
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = movie.releaseDate,
+                    text = movie.releaseDate.year.toString(),
                     fontSize = MaterialTheme.typography.labelMedium.fontSize,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -145,7 +150,7 @@ private fun getMoviesSample(): List<Movie> =
             posterOriginalPath = null,
             adult = false,
             overview = "",
-            releaseDate = "2022",
+            releaseDate = LocalDate.now(),
             genreIds = listOf(),
             originalTitle = "",
             originalLanguage = "",
@@ -161,7 +166,7 @@ private fun getMoviesSample(): List<Movie> =
             posterOriginalPath = null,
             adult = false,
             overview = "",
-            releaseDate = "2023",
+            releaseDate = LocalDate.now(),
             genreIds = listOf(),
             originalTitle = "",
             originalLanguage = "",

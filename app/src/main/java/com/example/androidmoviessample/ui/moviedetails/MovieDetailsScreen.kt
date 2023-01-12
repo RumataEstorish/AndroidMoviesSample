@@ -25,6 +25,7 @@ import com.example.androidmoviessample.ui.theme.AndroidMoviesSampleTheme
 import com.example.androidmoviessample.ui.utils.ImageEmpty
 import com.example.androidmoviessample.ui.utils.ImageError
 import com.example.androidmoviessample.ui.utils.ImageLoading
+import java.time.LocalDate
 
 @Composable
 fun MovieDetailsScreen(
@@ -38,20 +39,26 @@ fun MovieDetailsScreen(
     }
 
     when (val state = viewModel.onState.collectAsState().value) {
-        is MovieDetailsState.ShowError -> ErrorScreenContent(
-            message = state.message,
-            stringResource(id = R.string.back)
-        ) {
-            viewModel.onErrorScreenClick()
-        }
-        MovieDetailsState.ShowLoad -> MovieDetailsContent(
+        is MovieDetailsState.ShowNetworkError -> ErrorScreenContent(
+            message = stringResource(id = R.string.network_error),
+            actionButtonText = stringResource(id = R.string.back),
+            onActionClick = viewModel::onErrorScreenClick
+        )
+        is MovieDetailsState.ShowGeneralError -> ErrorScreenContent(
+            message = stringResource(id = R.string.unknown_error),
+            actionButtonText = stringResource(id = R.string.unknown_error),
+            onActionClick = viewModel::onErrorScreenClick
+        )
+        is MovieDetailsState.ShowLoad -> MovieDetailsContent(
             movieDetails = null,
-            showProgress = true
-        ) { viewModel.onBackpressed() }
+            showProgress = true,
+            onBackClick = viewModel::onBackpressed
+        )
         is MovieDetailsState.UpdateMovieDetails -> MovieDetailsContent(
             movieDetails = state.movieDetails,
-            showProgress = false
-        ) { viewModel.onBackpressed() }
+            showProgress = false,
+            onBackClick = viewModel::onBackpressed
+        )
     }
 }
 
@@ -112,7 +119,7 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
                 fontSize = MaterialTheme.typography.titleLarge.fontSize
             )
             Text(
-                text = movieDetails.releaseDate,
+                text = movieDetails.releaseDate.year.toString(),
                 fontSize = MaterialTheme.typography.labelMedium.fontSize
             )
             Text(
@@ -143,7 +150,7 @@ private fun MovieDetailsPreviewNight() {
                 overview = "This is great and cool movie with pretty long description",
                 popularity = 0.0f,
                 posterOriginalPath = null,
-                releaseDate = "2022",
+                releaseDate = LocalDate.now(),
                 revenue = 0,
                 runtime = null,
                 status = "",

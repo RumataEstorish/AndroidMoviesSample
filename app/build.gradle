@@ -5,6 +5,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('keystore/release.keystore')
+            storePassword '3NMz8K48'
+            keyPassword '3NMz8K48'
+            keyAlias 'moviesample'
+        }
+        debug{
+            storeFile file('keystore/debug.keystore')
+            storePassword 'dkcGqS8D'
+            keyPassword 'dkcGqS8D'
+            keyAlias 'moviesample_debug'
+        }
+    }
     namespace 'com.example.androidmoviessample'
     compileSdk 33
 

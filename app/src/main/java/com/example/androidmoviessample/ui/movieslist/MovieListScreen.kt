@@ -82,7 +82,16 @@ private fun MoviesListContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { TopAppBarTitle(stringResource(id = R.string.trending_movies)) },
+                title = {
+                    TopAppBarTitle(
+                        stringResource(
+                            id = when (trendingPeriodState) {
+                                TrendingPeriod.DAY -> R.string.trending_movies_day
+                                TrendingPeriod.WEEK -> R.string.trending_movies_week
+                            }
+                        )
+                    )
+                },
                 actions = {
                     val iconButtonModifier = Modifier
                         .width(48.dp)

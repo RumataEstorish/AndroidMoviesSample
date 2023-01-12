@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,8 +72,7 @@ private fun MoviesListContent(
 
     Column(
         Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
+            .fillMaxSize()
     ) {
         if (showProgressState) {
             LinearProgressIndicator(
@@ -93,50 +93,63 @@ private fun MoviesListContent(
 @Composable
 private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) {
     Card(
-        modifier = Modifier.padding(24.dp, 8.dp, 24.dp, 0.dp),
+        modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 0.dp),
         onClick = { onMovieClicked(movie) }) {
         Row(
             modifier = Modifier
-                .height(80.dp)
+                .height(160.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Column(
-                modifier = Modifier
-                    .padding(10.dp)
-            ) {
-                Text(
-                    text = movie.title,
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = movie.releaseDate.year.toString(),
-                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
 
             val imageModifier = Modifier
                 .fillMaxHeight()
                 .widthIn(80.dp)
-
 
             movie.posterSmallPath
                 ?.let {
                     SubcomposeAsyncImage(
                         modifier = imageModifier,
                         model = it,
-                        alignment = Alignment.CenterEnd,
+                        alignment = Alignment.CenterStart,
                         contentDescription = null,
                         loading = { ImageLoading(imageModifier) },
                         error = { ImageError(imageModifier) }
                     )
                 }
                 ?: ImageEmpty(modifier = imageModifier)
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(18.dp),
+            ) {
+                Column {
+                    Text(
+                        text = movie.title,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = movie.overview,
+                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                        maxLines = 3,
+                        lineHeight = MaterialTheme.typography.labelMedium.lineHeight,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(0.dp, 8.dp),
+                        textAlign = TextAlign.Start
+                    )
+                }
+                Text(
+                    text = movie.releaseDate.year.toString(),
+                    fontSize = MaterialTheme.typography.labelSmall.fontSize,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.align(Alignment.BottomStart)
+                )
+            }
         }
     }
 }
@@ -149,7 +162,7 @@ private fun getMoviesSample(): List<Movie> =
             posterSmallPath = null,
             posterOriginalPath = null,
             adult = false,
-            overview = "",
+            overview = "This is a good movie with very large many text to display I suppose this should move to next line and ellipsize at the end",
             releaseDate = LocalDate.now(),
             genreIds = listOf(),
             originalTitle = "",
@@ -165,7 +178,7 @@ private fun getMoviesSample(): List<Movie> =
             posterSmallPath = null,
             posterOriginalPath = null,
             adult = false,
-            overview = "",
+            overview = "This is a good movie",
             releaseDate = LocalDate.now(),
             genreIds = listOf(),
             originalTitle = "",

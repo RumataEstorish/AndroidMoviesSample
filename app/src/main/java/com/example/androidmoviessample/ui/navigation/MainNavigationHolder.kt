@@ -16,14 +16,12 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainNavigationHolder() {
-
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = NAV_ROUTE_MOVIE_LIST
     ) {
-
         composable(route = NAV_ROUTE_MOVIE_LIST) {
             MovieListScreen(
                 navController = navController,
@@ -44,4 +42,3 @@ fun MainNavigationHolder() {
         }
     }
 }
-

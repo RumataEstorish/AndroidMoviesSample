@@ -1,7 +1,6 @@
 package com.example.androidmoviessample.data.web.models
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
 internal data class MovieDetailsResponse(

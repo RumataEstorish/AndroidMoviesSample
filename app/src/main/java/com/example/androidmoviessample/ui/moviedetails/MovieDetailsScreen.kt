@@ -92,13 +92,13 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(32.dp)
-    ) {
+            .padding(32.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp),
 
+    ) {
         val imageModifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 320.dp)
-
 
         movieDetails.posterOriginalPath
             ?.let {
@@ -113,7 +113,7 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
             }
             ?: ImageEmpty(modifier = imageModifier)
 
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(
                 text = movieDetails.title,
                 fontSize = MaterialTheme.typography.titleLarge.fontSize
@@ -127,10 +127,8 @@ private fun MovieDetailsLayout(movieDetails: MovieDetails) {
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize
             )
         }
-
     }
 }
-
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
@@ -159,9 +157,9 @@ private fun MovieDetailsPreviewNight() {
                 video = false,
                 voteAverage = 0.0f,
                 voteCount = 0
-            ), showProgress = false
+            ),
+            showProgress = false
         ) {
-
         }
     }
 }

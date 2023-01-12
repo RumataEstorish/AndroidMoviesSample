@@ -94,15 +94,14 @@ private fun MoviesListContent(
 private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) {
     Card(
         modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 0.dp),
-        onClick = { onMovieClicked(movie) }) {
+        onClick = { onMovieClicked(movie) }
+    ) {
         Row(
             modifier = Modifier
                 .height(160.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-
             val imageModifier = Modifier
                 .fillMaxHeight()
                 .widthIn(80.dp)
@@ -123,7 +122,7 @@ private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) 
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(18.dp),
+                    .padding(18.dp)
             ) {
                 Column {
                     Text(
@@ -154,7 +153,6 @@ private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) 
     }
 }
 
-
 private fun getMoviesSample(): List<Movie> =
     listOf(
         Movie(
@@ -171,7 +169,7 @@ private fun getMoviesSample(): List<Movie> =
             backDropPath = null,
             popularity = 0.0f,
             voteCount = 0,
-            video = false,
+            video = false
         ),
         Movie(
             id = UUID.randomUUID().toString(),
@@ -187,7 +185,7 @@ private fun getMoviesSample(): List<Movie> =
             backDropPath = null,
             popularity = 0.0f,
             voteCount = 0,
-            video = false,
+            video = false
         )
     )
 
@@ -211,7 +209,6 @@ private fun PreviewMovieListItemNight() {
     }
 }
 
-
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun PreviewMoviesListNight() {
@@ -231,6 +228,3 @@ private fun PreviewMoviesList() {
         ) {}
     }
 }
-
-
-

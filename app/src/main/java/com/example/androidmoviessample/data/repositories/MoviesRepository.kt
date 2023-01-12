@@ -15,7 +15,6 @@ internal class MoviesRepository(
         moviesSource.getMoviesList(trendingPeriod)
             .map { it.map { movie -> movie.toDomain() } }
 
-
     override suspend fun getMovieDetails(id: String): Result<MovieDetails?> =
         id.toIntOrNull()
             ?.let {

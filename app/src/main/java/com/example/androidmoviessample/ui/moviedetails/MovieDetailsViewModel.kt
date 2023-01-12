@@ -41,7 +41,6 @@ class MovieDetailsViewModel(
                             _onState.value = MovieDetailsState.UpdateMovieDetails(it)
                         }
             }
-
         }
     }
 
@@ -56,5 +55,4 @@ class MovieDetailsViewModel(
             _onNavigate.emit(Screen.MovieList)
         }
     }
-
 }

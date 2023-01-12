@@ -40,8 +40,9 @@ class MovieListViewModel(
                             else -> MovieListState.ShowGeneralError
                         }
                 }
-                result.isSuccess -> _onState.value =
-                    MovieListState.UpdateMovieList(result.getOrNull() ?: emptyList())
+                result.isSuccess ->
+                    _onState.value =
+                        MovieListState.UpdateMovieList(result.getOrNull() ?: emptyList())
             }
         }
     }
@@ -55,5 +56,4 @@ class MovieListViewModel(
     fun onRefreshClick() {
         loadMovies()
     }
-
 }

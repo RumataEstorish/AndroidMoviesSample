@@ -23,7 +23,6 @@ internal class MoviesSource(
         apiKey: String = BuildConfig.API_KEY
     ): Result<List<MovieResponse>> =
         runCatching {
-
             val (smallPath, originPath) = getImageRealUrl(apiKey)
 
             moviesRequest.getTrendingMovieList(
@@ -64,5 +63,4 @@ internal class MoviesSource(
                     Timber.e(it.exceptionOrNull())
                 }
             }
-
 }

@@ -25,5 +25,5 @@ internal fun MovieDetailsResponse.toDomain(): MovieDetails =
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount,
+        voteCount = voteCount
     )

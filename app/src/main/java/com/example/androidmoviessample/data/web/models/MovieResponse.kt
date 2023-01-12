@@ -4,7 +4,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
-@JsonClass(generateAdapter = true)
 internal data class MovieResponse(
     @Json(name = "id")
     val id: Int,

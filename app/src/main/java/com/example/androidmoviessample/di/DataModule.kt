@@ -6,6 +6,7 @@ import com.example.androidmoviessample.data.web.requests.IMoviesRequest
 import com.example.androidmoviessample.data.web.sources.MoviesSource
 import com.example.androidmoviessample.domain.repositories.IMovieRepository
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.binds
 import org.koin.dsl.module
@@ -23,6 +24,7 @@ val dataModule = module {
                     Moshi
                         .Builder()
                         .add(DateJsonAdapter())
+                        .addLast(KotlinJsonAdapterFactory())
                         .build()
                 )
             )

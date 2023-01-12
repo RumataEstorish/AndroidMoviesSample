@@ -25,11 +25,12 @@ android {
 
         debug {
             minifyEnabled false
-            buildConfigField "String", "API_TEST_KEY", '"c9856d0cb57c3f14bf75bdc6c063b8f3"'
+            buildConfigField "String", "API_KEY", '"c9856d0cb57c3f14bf75bdc6c063b8f3"'
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", '"c9856d0cb57c3f14bf75bdc6c063b8f3"'
         }
     }
     compileOptions {
@@ -44,11 +45,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
     }
 }
 
@@ -72,10 +68,6 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_android_compose_version"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 }

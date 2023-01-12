@@ -1,5 +1,6 @@
 package com.example.androidmoviessample.data.web.sources
 
+import com.example.androidmoviessample.BuildConfig
 import com.example.androidmoviessample.data.web.models.MovieDetailsResponse
 import com.example.androidmoviessample.data.web.models.MovieResponse
 import com.example.androidmoviessample.data.web.requests.IMoviesRequest
@@ -9,7 +10,7 @@ internal class MoviesSource(
     private val moviesRequest: IMoviesRequest
 ) {
 
-    private suspend fun getImageRealUrl(apiKey: String): Pair<String?, String?> =
+    private suspend fun getImageRealUrl(apiKey: String = BuildConfig.API_KEY): Pair<String?, String?> =
         moviesRequest.getConfiguration(apiKey)
             .body()
             ?.images
@@ -20,7 +21,7 @@ internal class MoviesSource(
 
     suspend fun getMoviesList(
         trendingPeriod: TrendingPeriod,
-        apiKey: String
+        apiKey: String = BuildConfig.API_KEY
     ): Result<List<MovieResponse>> =
         runCatching {
 
@@ -42,7 +43,10 @@ internal class MoviesSource(
                 ?: emptyList()
         }
 
-    suspend fun getMovieDetails(id: Int, apiKey: String): Result<MovieDetailsResponse?> =
+    suspend fun getMovieDetails(
+        id: Int,
+        apiKey: String = BuildConfig.API_KEY
+    ): Result<MovieDetailsResponse?> =
         runCatching {
             val (_, originPath) = getImageRealUrl(apiKey)
 

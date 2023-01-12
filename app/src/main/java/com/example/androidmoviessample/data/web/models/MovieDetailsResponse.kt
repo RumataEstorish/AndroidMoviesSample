@@ -38,7 +38,7 @@ internal data class MovieDetailsResponse(
     @Json(name = "release_date")
     val releaseDate: String,
     @Json(name = "revenue")
-    val revenue: Int,
+    val revenue: Long,
     @Json(name = "runtime")
     val runtime: Int?,
     @Json(name = "spoken_languages")

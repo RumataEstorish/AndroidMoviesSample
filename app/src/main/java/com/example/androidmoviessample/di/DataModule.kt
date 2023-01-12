@@ -2,7 +2,6 @@ package com.example.androidmoviessample.di
 
 import com.example.androidmoviessample.data.repositories.MoviesRepository
 import com.example.androidmoviessample.data.web.requests.IMoviesRequest
-import com.example.androidmoviessample.data.web.sources.CredentialsSource
 import com.example.androidmoviessample.data.web.sources.MoviesSource
 import com.example.androidmoviessample.domain.repositories.IMovieRepository
 import org.koin.core.module.dsl.factoryOf
@@ -21,8 +20,6 @@ val dataModule = module {
     }
 
     factoryOf(::MoviesRepository) binds arrayOf(IMovieRepository::class)
-
-    factoryOf(::CredentialsSource)
 
     factoryOf(::MoviesSource)
 }

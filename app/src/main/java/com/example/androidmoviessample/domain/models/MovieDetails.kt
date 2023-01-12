@@ -14,7 +14,7 @@ data class MovieDetails(
     val popularity: Float,
     val posterOriginalPath: String?,
     val releaseDate: String,
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int?,
     val status: String,
     val tagline: String,

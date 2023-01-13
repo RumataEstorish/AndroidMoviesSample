@@ -96,7 +96,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.compose_navigation_version}")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
-//    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.21")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")

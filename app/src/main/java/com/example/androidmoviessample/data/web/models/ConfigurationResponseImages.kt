@@ -1,7 +1,9 @@
 package com.example.androidmoviessample.data.web.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class ConfigurationResponseImages(
     @Json(name = "base_url")
     val baseUrl: String,

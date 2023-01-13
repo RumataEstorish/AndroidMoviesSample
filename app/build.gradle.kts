@@ -2,19 +2,22 @@ plugins {
     kotlin("android")
     id("com.android.application")
     id("org.jmailen.kotlinter") version "3.13.0"
+    id("com.google.devtools.ksp") version "1.7.21-1.0.8"
 }
 
 android {
+
+    compileSdk = 33
+
     signingConfigs {
         create("release") {
-            storeFile = File("keystore/release.keystore")
+            storeFile = File(projectDir, "/keystore/release.keystore")
             storePassword = "3NMz8K48"
             keyPassword = "3NMz8K48"
             keyAlias = "moviesample"
         }
     }
     namespace = "com.example.androidmoviessample"
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.androidmoviessample"
@@ -37,6 +40,8 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "API_KEY", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\"")
+
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -78,7 +83,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:${Versions.compose_activity_version}")
     implementation("androidx.compose.ui:ui:${Versions.compose_version}")
     implementation("androidx.compose.ui:ui-tooling-preview:${Versions.compose_version}")
-    implementation("androidx.compose.material3:material3:1.1.0-alpha03")
+    implementation("androidx.compose.material3:material3:1.1.0-alpha04")
     implementation("androidx.navigation:navigation-compose:${Versions.compose_navigation_version}")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -86,7 +91,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.moshi:moshi:1.14.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.0-1.0.8")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     implementation("io.insert-koin:koin-core:${Versions.koin_version}")
     implementation("io.insert-koin:koin-android:${Versions.koin_version}")

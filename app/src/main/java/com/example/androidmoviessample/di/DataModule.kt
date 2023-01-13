@@ -9,7 +9,6 @@ import com.example.androidmoviessample.data.web.sources.MoviesSource
 import com.example.androidmoviessample.domain.repositories.IMovieRepository
 import com.example.androidmoviessample.domain.repositories.ISettingsRepository
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.binds
@@ -29,7 +28,6 @@ val dataModule = module {
                     Moshi
                         .Builder()
                         .add(DateJsonAdapter())
-                        .addLast(KotlinJsonAdapterFactory())
                         .build()
                 )
             )

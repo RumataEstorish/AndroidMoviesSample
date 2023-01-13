@@ -87,11 +87,11 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.compose_navigation_version}")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.21")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.moshi:moshi:1.14.0")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.0-1.0.8")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     implementation("io.insert-koin:koin-core:${Versions.koin_version}")

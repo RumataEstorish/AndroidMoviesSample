@@ -153,7 +153,7 @@ private fun MoviesListContent(
 @Composable
 private fun MovieListItem(movie: Movie, onMovieClicked: (movie: Movie) -> Unit) {
     Card(
-        modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 0.dp),
+        modifier = Modifier.padding(16.dp, 4.dp, 16.dp, 4.dp),
         onClick = { onMovieClicked(movie) }
     ) {
         Row(

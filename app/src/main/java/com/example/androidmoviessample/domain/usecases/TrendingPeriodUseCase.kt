@@ -4,8 +4,11 @@ import com.example.androidmoviessample.domain.models.TrendingPeriod
 import com.example.androidmoviessample.domain.repositories.ISettingsRepository
 
 class TrendingPeriodUseCase(
-    preferencesIMovieRepository: ISettingsRepository
+    private val settingsRepository: ISettingsRepository
 ) {
-    var trendingPeriod: TrendingPeriod =
-        preferencesIMovieRepository.trendingPeriod
+    var trendingPeriod: TrendingPeriod
+        get() = settingsRepository.trendingPeriod
+        set(value) {
+            settingsRepository.trendingPeriod = value
+        }
 }

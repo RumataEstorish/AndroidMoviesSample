@@ -9,12 +9,19 @@ android {
 
     compileSdk = 33
 
+    // Storing passwords and sensitive here is just for sample and insecure. Passwords should be store on CI tool or repository for configuration. I.e. remotely
     signingConfigs {
         create("release") {
             storeFile = File(projectDir, "/keystore/release.keystore")
             storePassword = "3NMz8K48"
             keyPassword = "3NMz8K48"
             keyAlias = "moviesample"
+        }
+        getByName("debug") {
+            storeFile = File(projectDir, "/keystore/debug.keystore")
+            storePassword = "cwR3yJYG"
+            keyPassword = "cwR3yJYG"
+            keyAlias = "moviesample_debug"
         }
     }
     namespace = "com.example.androidmoviessample"
@@ -32,6 +39,8 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
             buildConfigField("String", "API_KEY", "\"c9856d0cb57c3f14bf75bdc6c063b8f3\"")
+
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
             isMinifyEnabled = true

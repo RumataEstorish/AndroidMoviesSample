@@ -1,6 +1,7 @@
 package com.example.androidmoviessample
 
 import android.app.Application
+import com.example.androidmoviessample.di.commonModule
 import com.example.androidmoviessample.di.dataModule
 import com.example.androidmoviessample.di.domainModule
 import com.example.androidmoviessample.di.uiModules
@@ -21,7 +22,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(uiModules, domainModule, dataModule)
+            modules(uiModules, domainModule, dataModule, commonModule)
         }
     }
 }
